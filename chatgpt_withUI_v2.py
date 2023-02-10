@@ -15,7 +15,7 @@ api_key_field.grid(row=0, column=1,sticky=W)
 def check_api_key():
     openai.api_key = api_key_field.get()
     if not re.match('^sk-[A-Za-z0-9-]{48}$', openai.api_key): 
-        text_field.insert(END, "请提供 api-key\n\n") 
+        text_field.insert(END, "Please provide your API key \n\n") 
         entry_field.config(state="disabled") 
         send_btn.config(state="disabled")
         api_key_field.config(state="normal")
@@ -26,7 +26,7 @@ def check_api_key():
         check_btn.config(state="disabled")
         api_key_field.config(state="disabled")
 
-check_btn = Button(root, text="输入api-key",width=15, command=check_api_key)
+check_btn = Button(root, text="input your api-key",width=15, command=check_api_key)
 check_btn.grid(row=0, column=1,sticky=E,padx=10) 
 
 entry_field = Entry(root, width=80,state="disabled",textvariable="")
@@ -51,19 +51,19 @@ def send_message():
                 
                 
                 text_field.tag_configure("green",foreground="green")
-                text_field.insert(END, "我: " + prompt + "\n\n","green")
+                text_field.insert(END, "Me: " + prompt + "\n\n","green")
                 text_field.tag_configure("blue",foreground="blue")
                 text_field.insert(END, "Bot: " + response['choices'][0]['text'].strip() + "\n\n","blue")
                 text_field.see(END)
                 
             else:
-                text_field.insert(END, "Bot: 对不起，我不明白 \n\n")
+                text_field.insert(END, "Bot: Sorry, I don't understand \n\n")
         except openai.error.RateLimitError: 
             text_field.tag_configure("red",foreground="red")
-            text_field.insert(END, "Bot: 网络似乎问题，请再次发送 \n\n", "red")
+            text_field.insert(END, "Bot: Network error, please send message again \n\n", "red")
         
 
-send_btn = Button(root, text="发送", command=send_message,state="disabled")
+send_btn = Button(root, text="Send", command=send_message,state="disabled")
 
 send_btn.grid(row=3,columnspan=2,padx=2, pady=2)
 
